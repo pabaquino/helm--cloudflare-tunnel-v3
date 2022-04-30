@@ -1,6 +1,11 @@
 ---
 # https://onlyutkarsh.medium.com/how-to-publish-helm-3-charts-to-github-container-registry-using-github-actions-ad3e65235e7b
 
+on:
+  push:
+    branches:
+    - main
+
 env:
   HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
   # HELM_VERSION_TO_INSTALL: 3.8.2 # version of HELM to install
