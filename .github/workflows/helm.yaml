@@ -1,5 +1,6 @@
 ---
 # https://github.com/marketplace/actions/helm-chart-releaser
+# https://blog.ediri.io/how-to-create-a-github-gh-pages-branch-in-an-existing-repository
 
 on:
   push:
