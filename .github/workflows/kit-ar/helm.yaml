@@ -5,7 +5,7 @@
 on:
   push:
     branches:
-    - master
+    - kit-ar/main
 
 env:
   HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
