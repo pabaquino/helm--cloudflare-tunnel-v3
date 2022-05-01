@@ -7,10 +7,9 @@ cloudflare:
   # ignored if existingSecret is set to true
   tunnelToken: REPLACE-ME
 
-  protocol: http2    # auto, http2, h2mux, and quic
-  # https://blog.cloudflare.com/getting-cloudflare-tunnels-to-connect-to-the-cloudflare-network-with-quic/
-  # as of 2022-04, the following errors were occurring:
-  #     2022/05/01 02:39:36 failed to sufficiently increase receive buffer size (was: 208 kiB, wanted: 2048 kiB, got: 416 kiB). See https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size for details.
+  protocol: auto    # auto, http2, and quic
+
+  # some cloud providers seem to block egress UDP on QUIC... Use http2 instead
 
 image:
   repository: cloudflare/cloudflared
