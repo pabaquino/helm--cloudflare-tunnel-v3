@@ -23,6 +23,10 @@ cloudflare:
     # - hostname: hello.example.com
     #   service: hello_world
 
+debugContainer:
+  enabled: false
+  image:   "alpine:latest"
+
 image:
   repository: cloudflare/cloudflared
   pullPolicy: IfNotPresent

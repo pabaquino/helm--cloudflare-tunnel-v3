@@ -67,6 +67,24 @@ spec:
               readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+
+      {{- if .Values.debugContainer.enabled }}
+        - name: debug
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ .Values.debugContainer.image }}
+          envFrom:
+            - secretRef:
+            {{- if .Values.cloudflare.existingSecret }}
+                name: {{ .Values.cloudflare.existingSecret }}
+            {{- else }}
+                name: {{ include "cloudflare-tunnel.fullname" . }}
+            {{- end }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cloudflared/config
+              readOnly: true
+      {{- end }}
       volumes:
         - name: config
           configMap:
