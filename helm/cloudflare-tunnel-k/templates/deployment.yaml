@@ -73,6 +73,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.debugContainer.image }}
+          imagePullPolicy: IfNotPresent
           command: [ "/bin/sh" ]
           args:    [ "-c", "while true; do echo 'sleeping to keep this container available for terminal...'; date -u; sleep 900; done" ]
           envFrom:
