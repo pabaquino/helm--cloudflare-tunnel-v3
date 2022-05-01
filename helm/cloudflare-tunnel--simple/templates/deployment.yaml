@@ -1,5 +1,4 @@
-# Here we deploy cloudflared images. The tunnel credentials are stored in
-# a k8s secret, and the configuration is stored in a k8s configmap.
+# Here we deploy cloudflared images. The tunnel token is stored ina k8s secret
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,7 +14,6 @@ spec:
     metadata:
       annotations:
         # # These are here so the deployment rolls when the config or secret change.
-        # checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- if not .Values.cloudflare.existingSecret }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
         {{- end }}
