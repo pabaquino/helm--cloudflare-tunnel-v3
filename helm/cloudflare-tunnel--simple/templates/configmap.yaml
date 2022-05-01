@@ -30,12 +30,12 @@ data:
 
     loglevel: info
     # loglevel: debug
-    
+
     transport-loglevel: warn
     # transport-loglevel: info
-    
+
     {{- if .Values.cloudflare.protocol }}
-    protocol: .Values.cloudflare.protocol    # auto, http2, h2mux, and quic
+    protocol: {{ .Values.cloudflare.protocol }}    # auto, http2, h2mux, and quic
     {{- end }}
       # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
       - service: http_status:404
