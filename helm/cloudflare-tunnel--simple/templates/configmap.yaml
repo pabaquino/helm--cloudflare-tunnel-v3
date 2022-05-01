@@ -5,11 +5,11 @@ metadata:
   name: {{ include "cloudflare-tunnel.fullname" . }}
 data:
   config.yaml: |
-    # tunnel coonfig via ENV based token
+    # tunnel config via ENV based token
     
     # General purpose TCP routing for the network
     warp-routing:
-      enabled: {{ .Values.cloudflare.enableWarp }}
+      enabled: {{ .Values.cloudflare.enableWarp |default false }}
     # Serves the metrics server under /metrics and the readiness server under /ready
     metrics: 0.0.0.0:2000
     # Autoupdates applied in a k8s pod will be lost when the pod is removed or restarted, so
