@@ -5,10 +5,8 @@ metadata:
   name: {{ include "cloudflare-tunnel.fullname" . }}
 data:
   config.yaml: |
-    # # Name of the tunnel you want to run
-    # tunnel: {{ .Values.cloudflare.tunnelName }}
-    # # The location of the secret containing the tunnel credentials
-    # credentials-file: /etc/cloudflared/creds/credentials.json
+    # tunnel coonfig via ENV based token
+    
     # General purpose TCP routing for the network
     warp-routing:
       enabled: {{ .Values.cloudflare.enableWarp }}
@@ -18,15 +16,15 @@ data:
     # autoupdate doesn't make sense in Kubernetes. However, outside of Kubernetes, we strongly
     # recommend using autoupdate.
     no-autoupdate: true
-    # # The `ingress` block tells cloudflared which local service to route incoming
-    # # requests to. For more about ingress rules, see
-    # # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
-    # ingress:
-    #   {{- with .Values.cloudflare.ingress }}
-    #   {{- toYaml . | nindent 6 }}
-    #   {{- end }}
-    #   # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
-    #   - service: http_status:404
+    # The `ingress` block tells cloudflared which local service to route incoming
+    # requests to. For more about ingress rules, see
+    # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
+    ingress:
+      {{- with .Values.cloudflare.ingress }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
+      - service: http_status:404
 
     loglevel: info
     # loglevel: debug
