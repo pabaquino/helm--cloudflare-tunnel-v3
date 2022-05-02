@@ -120,6 +120,7 @@ spec:
                   {{- end }}
         {{- end }}
         {{- end }}
+        {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
