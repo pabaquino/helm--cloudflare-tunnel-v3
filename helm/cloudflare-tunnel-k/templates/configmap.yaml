@@ -26,10 +26,10 @@ data:
       # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
       - service: http_status:404
 
-    loglevel: info
+    loglevel: {{ .Values.cloudflare.loglevel }}
     # loglevel: debug
 
-    transport-loglevel: warn
+    transport-loglevel: {{ .Values.cloudflare.transport-loglevel }}
     # transport-loglevel: info
 
     {{- if .Values.cloudflare.protocol }}
