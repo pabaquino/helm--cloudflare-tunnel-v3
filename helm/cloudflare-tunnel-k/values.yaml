@@ -23,6 +23,9 @@ cloudflare:
     # - hostname: hello.example.com
     #   service: hello_world
 
+  loglevel: info
+  transport-loglevel: warn
+
 debugContainer:
   enabled: false
   image:   "alpine:latest"
