@@ -103,6 +103,7 @@ spec:
         {{- with .Values.affinity }}
         {{- toYaml . | nindent 8 }}
         {{- else }}
+        {{- if .Values.replicaCount > 1 }}
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 10
@@ -116,7 +117,7 @@ spec:
                       values:
                         - {{ $v }}
                   {{- end }}
-      {{- end }}
+        {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
