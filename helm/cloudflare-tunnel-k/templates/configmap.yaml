@@ -6,7 +6,7 @@ metadata:
 data:
   config.yaml: |
     # tunnel config via ENV based token
-    
+
     # General purpose TCP routing for the network
     warp-routing:
       enabled: {{ .Values.cloudflare.enableWarp |default false }}
@@ -19,18 +19,18 @@ data:
     # The `ingress` block tells cloudflared which local service to route incoming
     # requests to. For more about ingress rules, see
     # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
+    {{- if .Values.cloudflare.ingress }}
     ingress:
       {{- with .Values.cloudflare.ingress }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
       # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
       - service: http_status:404
+    {{- end }}
 
     loglevel: {{ .Values.cloudflare.loglevel }}
-    # loglevel: debug
 
-    transport-loglevel: {{ .Values.cloudflare.transport-loglevel }}
-    # transport-loglevel: info
+    transportLoglevel: {{ .Values.cloudflare.transportLoglevel }}
 
     {{- if .Values.cloudflare.protocol }}
     protocol: {{ .Values.cloudflare.protocol }}    # auto, http2, h2mux, and quic
