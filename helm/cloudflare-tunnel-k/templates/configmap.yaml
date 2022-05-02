@@ -30,7 +30,7 @@ data:
 
     loglevel: {{ .Values.cloudflare.loglevel }}
 
-    transportLoglevel: {{ .Values.cloudflare.transportLoglevel }}
+    transport-loglevel: {{ .Values.cloudflare.transportLoglevel }}
 
     {{- if .Values.cloudflare.protocol }}
     protocol: {{ .Values.cloudflare.protocol }}    # auto, http2, h2mux, and quic
