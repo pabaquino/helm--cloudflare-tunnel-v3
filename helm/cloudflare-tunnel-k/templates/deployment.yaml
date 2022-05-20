@@ -70,6 +70,8 @@ spec:
 
       {{- if .Values.debugContainer.enabled }}
         - name: debug
+          securityContext:
+            runAsNonRoot: false
           image: {{ .Values.debugContainer.image }}
           imagePullPolicy: IfNotPresent
           command: [ "/bin/sh" ]
