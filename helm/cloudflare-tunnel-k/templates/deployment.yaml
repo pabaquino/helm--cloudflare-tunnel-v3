@@ -71,6 +71,7 @@ spec:
       {{- if .Values.debugContainer.enabled }}
         - name: debug
           securityContext:
+            runAsUser: 0
             runAsNonRoot: false
           image: {{ .Values.debugContainer.image }}
           imagePullPolicy: IfNotPresent
