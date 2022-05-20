@@ -70,8 +70,6 @@ spec:
 
       {{- if .Values.debugContainer.enabled }}
         - name: debug
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.debugContainer.image }}
           imagePullPolicy: IfNotPresent
           command: [ "/bin/sh" ]
