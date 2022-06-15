@@ -106,7 +106,7 @@ spec:
         {{- with .Values.affinity }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- if affinity_keep_podAntiAffinity }}
+        {{- if .Values.affinity_keep_podAntiAffinity }}
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 10
