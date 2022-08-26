@@ -35,7 +35,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}-amd64" # explicit amd64 2022.8.1+ no longer has arch agnostic image
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
