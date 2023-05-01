@@ -53,6 +53,9 @@ spec:
             # cloudflared will actually do. This file is created by a ConfigMap.
             - --config
             - /etc/cloudflared/config/config.yaml
+            # we should NOT auto-update, as we are in k8s (check documentation)
+            # even though this is also defined in configmap, it's helps reinforce and protect
+            - --no-autoupdate
             - run
 
           livenessProbe:
