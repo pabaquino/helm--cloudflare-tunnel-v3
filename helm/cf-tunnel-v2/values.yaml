@@ -38,7 +38,7 @@ cloudflare:
   # -------------------------------------------------------------------------------------
   protocol: auto    # auto, http2, and quic
 
-  # some cloud providers seem to block egress UDP on QUIC... Use http2 instead
+  # some cloud providers seem to block egress UDP on QUIC... Use http2 instead if needed
 
   # # Define ingress rules for the tunnel. See
   # # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress
@@ -52,8 +52,8 @@ cloudflare:
   #   # - hostname: hello.example.com
   #   #   service: hello_world
 
-  loglevel: info
-  transportLoglevel: warn
+  loglevel:          info     # trace, debug, info, warn, error, fatal, panic
+  transportLoglevel: warn     # trace, debug, info, warn, error, fatal, panic
 
 debugContainer:
   enabled: false
