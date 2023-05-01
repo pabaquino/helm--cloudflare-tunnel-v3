@@ -7,6 +7,7 @@ data:
   config.yaml: |
     # tunnel config via ENV based token or credentials.json
     {{- if or .Values.cloudflare.existingSecretCred .Values.cloudflare.tunnelCli }}
+    tunnel: {{ .Values.cloudflare.tunnelName |quote }}
     credentials-file: /etc/cloudflared/creds/credentials.json
     {{- end }}
 
