@@ -5,7 +5,10 @@ metadata:
   name: {{ include "cloudflare-tunnel.fullname" . }}
 data:
   config.yaml: |
-    # tunnel config via ENV based token
+    # tunnel config via ENV based token or credentials.json
+    {{- if or .Values.cloudflare.existingSecretCred .Values.cloudflare.tunnelCli }}
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    {{- end }}
 
     # General purpose TCP routing for the network
     warp-routing:

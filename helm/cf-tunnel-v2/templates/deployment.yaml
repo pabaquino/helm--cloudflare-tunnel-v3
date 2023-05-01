@@ -16,7 +16,10 @@ spec:
         # These are here so the deployment rolls when the config or secret change.
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- if not .Values.cloudflare.existingSecret }}
-        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret-token.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if not .Values.cloudflare.existingSecretCred }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret-creds.yaml") . | sha256sum }}
         {{- end }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
@@ -35,7 +38,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}-amd64" # explicit amd64 2022.8.1+ no longer has arch agnostic image
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
@@ -65,6 +68,17 @@ spec:
             - name: config
               mountPath: /etc/cloudflared/config
               readOnly: true
+
+            {{- if .Values.cloudflare.existingSecretCred }}
+            # This enables use of tunnels created via "cloudflared tunnel create".
+            # Each tunnel has an associated "credentials file" which authorizes machines
+            # to run the tunnel. cloudflared will read this file from its local filesystem.
+            # it is assumed the mounted volume has "credentials.json" as per config map setting
+            - name: creds
+              mountPath: /etc/cloudflared/creds
+              readOnly: true
+            {{- end }}
+
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 
@@ -88,6 +102,11 @@ spec:
             - name: config
               mountPath: /etc/cloudflared/config
               readOnly: true
+            {{- if .Values.cloudflare.existingSecretCred }}
+            - name: creds
+              mountPath: /etc/cloudflared/creds
+              readOnly: true
+            {{- end }}
       {{- end }}
       volumes:
         - name: config
@@ -96,6 +115,12 @@ spec:
             items:
               - key: config.yaml
                 path: config.yaml
+        {{- if .Values.cloudflare.existingSecretCred }}
+        - name: creds
+          secret:
+            secretName: {{ .Values.cloudflare.existingSecretCred }}
+        {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
