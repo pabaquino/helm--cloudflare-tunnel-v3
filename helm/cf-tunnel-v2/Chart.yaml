@@ -21,7 +21,7 @@ version: "2.0107.230402"
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "2023.4.1" # skipping "2023.4.2" due to invalid image checksum
+appVersion: "2023.4.2"
 
 # Let's look professional with a Cloudflare icon.
 icon: https://developers.cloudflare.com/cloudflare-one/favicon-32x32.png
