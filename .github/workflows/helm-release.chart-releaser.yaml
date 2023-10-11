@@ -3,7 +3,7 @@
 # https://blog.ediri.io/how-to-create-a-github-gh-pages-branch-in-an-existing-repository
 # https://dev.to/jamiemagee/how-to-host-your-helm-chart-repository-on-github-3kd
 
-name: "HELM chart for Cloudflare Tunnel daemon (cloudflared)"
+name: "HELM-release"
 
 on:
   push:
