@@ -9,6 +9,8 @@ on:
   push:
     branches:
     - kit-ar/x--release
+    tags:
+    - kit-ar/v*
 
 env:
   HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
