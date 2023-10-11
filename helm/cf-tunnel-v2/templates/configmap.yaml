@@ -39,3 +39,4 @@ data:
     {{- if .Values.cloudflare.protocol }}
     protocol: {{ .Values.cloudflare.protocol }}    # auto, http2, h2mux, and quic
     {{- end }}
+
