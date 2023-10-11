@@ -47,3 +47,4 @@ jobs:
           charts_dir: ${{ env.CHART_BASEDIR }}
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        pages_branch: "kit-ar/gh-pages"
