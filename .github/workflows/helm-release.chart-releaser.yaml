@@ -1,17 +1,20 @@
 ---
 # https://github.com/marketplace/actions/helm-chart-releaser
 # https://blog.ediri.io/how-to-create-a-github-gh-pages-branch-in-an-existing-repository
+# https://dev.to/jamiemagee/how-to-host-your-helm-chart-repository-on-github-3kd
+
+name: "HELM chart for Cloudflare Tunnel daemon (cloudflared)"
 
 on:
   push:
     branches:
-    - kit-ar/main
+    - kit-ar/x--release
 
 env:
   HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
-  HELM_VERSION_TO_INSTALL: 3.8.2 # version of HELM to install
+  # HELM_VERSION_TO_INSTALL: 3.13.0 # version of HELM to install
   CHART_BASEDIR: ${{ github.workspace }}/helm
-  GCR_IMAGE: ghcr.io/${{ github.repository_owner }}/cloudflare-tunnel
+  # GCR_IMAGE: ghcr.io/${{ github.repository_owner }}/cloudflare-tunnel
 
 jobs:
   build:
@@ -29,12 +32,15 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3
         with:
-          version: ${{ env.HELM_VERSION_TO_INSTALL }} # default is latest
+          # version: ${{ env.HELM_VERSION_TO_INSTALL }} # default is latest
+          version: '<version>' # default is latest (stable)
+          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
+
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.4.0
+        uses: helm/chart-releaser-action@v1.5.0
         with:
           charts_dir: ${{ env.CHART_BASEDIR }}
         env:
