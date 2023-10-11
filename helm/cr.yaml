@@ -1,6 +1,6 @@
 # charts-repo: https://kit-ar.github.io/helm--cloudflare-tunnel-v2/charts
-charts-repo: https://kit-ar.github.io/helm--cloudflare-tunnel-v2
+charts-repo: https://kit-ar.github.io/helm--cloudflare-tunnel-v3
 owner: kit-ar
-git-repo: helm--cloudflare-tunnel-v2
+git-repo: helm--cloudflare-tunnel-v3
 # sign: true
 # key:

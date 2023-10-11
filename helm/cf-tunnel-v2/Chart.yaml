@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cf-tunnel-v2
+name: cf-tunnel-v3
 description: Creation of a cloudflared deployment - a reverse tunnel for an environment (flex config)
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -15,7 +15,7 @@ type: application
 # "2.0101.230402" -> "v2.1.1" of the chart, referring to "2023.4.2" of the tunnel
 # The reason for this is to make the current chart update with the bump when deployed via HelmRelease
 #
-version: "2.0121.230802"
+version: "3.0000.230802"
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
