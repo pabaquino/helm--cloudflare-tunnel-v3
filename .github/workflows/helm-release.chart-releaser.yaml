@@ -8,7 +8,7 @@ name: "HELM-release"
 on:
   push:
     branches:
-    - kit-ar/x--main
+    - kit-ar/main
 #   pull_request:
 #     branches:
 #       - kit-ar/x--release
