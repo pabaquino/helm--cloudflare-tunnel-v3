@@ -31,8 +31,7 @@ spec:
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- with (lookup "v1" "ConfigMap" .Release.Namespace  (include "cloudflare-tunnel.fullname" . )) }}
           {{- if .data }}
-        checksum/configmap-live: |
-          {{ .data | toJson }}
+        checksum/configmap-live: {{ .data |toJson |b64enc |sha256sum }}
             {{- else }}
         checksum/configmap-live: "<no-data>"
           {{- end }}
@@ -42,8 +41,7 @@ spec:
         {{- else }}
           {{- with (lookup "v1" "Secret" .Release.Namespace .Values.cloudflare.existingSecret) }}
             {{- if .data }}
-        checksum/secret-live: |
-          {{ .data | toJson }}
+        checksum/secret-live: {{ .data |toJson |b64enc |sha256sum }}
             {{- else }}
         checksum/secret-live: "<no-data>"
             {{- end }}
@@ -54,8 +52,7 @@ spec:
         {{- else }}
           {{- with (lookup "v1" "Secret" .Release.Namespace .Values.cloudflare.existingSecretCred) }}
             {{- if .data }}
-        checksum/secretCred-live: \
-          {{ .data | toJson }}
+        checksum/secretCred-live: {{ .data |toJson |b64enc |sha256sum }}
             {{- else }}
         checksum/secretCred-live: "<no-data>"
             {{- end }}
