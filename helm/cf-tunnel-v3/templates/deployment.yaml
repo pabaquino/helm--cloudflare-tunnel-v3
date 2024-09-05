@@ -7,9 +7,9 @@
 {{/* (merge $rootV.x (deepCopy $rootG.x))  -->  $rootG wins   */}}
 {{/* (merge $rootG.x (deepCopy $rootV.x))  -->  $rootV wins   */}}
 {{/* ---------------------------------------------------------------------------------------------------- */}}
-{{- $affinity := (merge $rootV.affinity $rootG.affinity) }}
-{{- $nodeSelector := (merge $rootV.nodeSelector $rootG.nodeSelector) }}
-{{- $tolerations := concat $rootV.tolerations $rootG.tolerations }}
+{{- $affinity     := (merge ($rootV.affinity     |default dict) ($rootG.affinity     |default dict)) }}
+{{- $nodeSelector := (merge ($rootV.nodeSelector |default dict) ($rootG.nodeSelector |default dict)) }}
+{{- $tolerations  := concat ($rootV.tolerations  |default list) ($rootG.tolerations  |default list) }}
 {{/* ---------------------------------------------------------------------------------------------------- */}}
 ---
 # Here we deploy cloudflared images. The tunnel token is stored ina k8s secret
