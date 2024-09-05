@@ -15,11 +15,28 @@ spec:
       annotations:
         # These are here so the deployment rolls when the config or secret change.
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with (lookup "v1" "ConfigMap" .Release.Namespace  (include "cloudflare-tunnel.fullname" . )) }}
+          {{- if .data }}
+        checksum/configmap-live: {{ .data | sha256sum }}
+          {{- end }}
+        {{- end }}
         {{- if not .Values.cloudflare.existingSecret }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret-token.yaml") . | sha256sum }}
+        {{- else }}
+          {{- with (lookup "v1" "Secret" .Release.Namespace .Values.cloudflare.existingSecret) }}
+            {{- if .data }}
+        checksum/secret-live: {{ .data | sha256sum }}
+            {{- end }}
+          {{- end }}
         {{- end }}
         {{- if not .Values.cloudflare.existingSecretCred }}
-        checksum/secret: {{ include (print $.Template.BasePath "/secret-creds.yaml") . | sha256sum }}
+        checksum/secretCred: {{ include (print $.Template.BasePath "/secret-creds.yaml") . | sha256sum }}
+        {{- else }}
+          {{- with (lookup "v1" "Secret" .Release.Namespace .Values.cloudflare.existingSecretCred) }}
+            {{- if .data }}
+        checksum/secretCred-live: {{ .data | sha256sum }}
+            {{- end }}
+          {{- end }}
         {{- end }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
