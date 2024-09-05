@@ -1,3 +1,17 @@
+{{/* https://masterminds.github.io/sprig/ */}}
+{{/* ---------------------------------------------------------------------------------------------------- */}}
+{{- $root := . }}
+{{- $rootV := $root.Values }}
+{{- $rootG := $rootV.global }}
+{{/* ---------------------------------------------------------------------------------------------------- */}}
+{{/* (merge $rootV.x (deepCopy $rootG.x))  -->  $rootG wins   */}}
+{{/* (merge $rootG.x (deepCopy $rootV.x))  -->  $rootV wins   */}}
+{{/* ---------------------------------------------------------------------------------------------------- */}}
+{{- $affinity := (merge $rootV.affinity $rootG.affinity) }}
+{{- $nodeSelector := (merge $rootV.nodeSelector $rootG.nodeSelector) }}
+{{- $tolerations := concat $rootV.tolerations $rootG.tolerations }}
+{{/* ---------------------------------------------------------------------------------------------------- */}}
+---
 # Here we deploy cloudflared images. The tunnel token is stored ina k8s secret
 apiVersion: apps/v1
 kind: Deployment
@@ -147,14 +161,14 @@ spec:
             secretName: {{ .Values.cloudflare.existingSecretCred }}
         {{- end }}
 
-      {{- with .Values.nodeSelector }}
+      {{- with $nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if .Values.replicaCount }}
       {{- if gt (int .Values.replicaCount) 1 }}
       affinity:
-        {{- with .Values.affinity }}
+        {{- with $affinity }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- if .Values.affinity_keep_podAntiAffinity }}
@@ -174,7 +188,7 @@ spec:
         {{- end }}
       {{- end }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with $tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
