@@ -25,7 +25,7 @@ jobs:
 
       - name: Push Helm Chart to OCI registry
         run: |
-          helm push cf-tunnel-v3-3.1011.240803.tgz oci://ghcr.io/pabaquino/helm-charts
+          helm push cf-tunnel-v3-3.1011.240804.tgz oci://ghcr.io/pabaquino/helm-charts
 
       - name: Confirm upload
-        run: helm show chart oci://ghcr.io/pabaquino/helm-charts/cf-tunnel-v3 --version 3.1011.240803
+        run: helm show chart oci://ghcr.io/pabaquino/helm-charts/cf-tunnel-v3 --version 3.1011.240804
