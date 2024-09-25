@@ -28,4 +28,4 @@ jobs:
           helm push cf-tunnel-v3-3.1011.240803.tgz oci://ghcr.io/pabaquino/helm-charts
 
       - name: Confirm upload
-        run: helm search repo oci://ghcr.io/pabaquino/helm-charts
+        run: helm show chart oci://ghcr.io/pabaquino/helm-charts/cf-tunnel-v3 --version 3.1011.240803
